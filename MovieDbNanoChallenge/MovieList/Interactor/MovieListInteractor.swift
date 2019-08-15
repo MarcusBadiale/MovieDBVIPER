@@ -9,10 +9,16 @@
 import UIKit
 
 /// MovieList Module Interactor
-class MovieListInteractor: MovieListInteractorProtocol {
-    func fetch(objectFor presenter: MovieListPresenterProtocol) {
+class MovieListInteractor:  MovieListInputInteractorProtocol {
+    
+    var presenter: MovieListOutputInteractorProtocol?
+    
+    func getNowPlayingMovieList() {
         
     }
     
+    func getPopularMovieList() {
+        
+    }
 
 }

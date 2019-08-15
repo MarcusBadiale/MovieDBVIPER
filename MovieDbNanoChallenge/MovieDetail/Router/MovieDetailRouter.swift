@@ -10,5 +10,8 @@ import UIKit
 
 /// MovieDetail Module Router (aka: Wireframe)
 class MovieDetailRouter: MovieDetailRouterProtocol {
-        
+    
+    static func createMovieDetailModule(movieDetailRef: MovieDetailView, movie: Movie) {
+        <#code#>
+    }
 }

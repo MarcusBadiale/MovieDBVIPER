@@ -9,6 +9,11 @@
 import UIKit
 
 /// MovieList Module Entity
-struct MovieListEntity {
-
+struct Movie {
+    
+    var name: String
+    var rating: Double
+    var description: String
+    
+    
 }

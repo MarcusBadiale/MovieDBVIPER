@@ -11,20 +11,23 @@ import UIKit
 /// MovieList Module View
 class MovieListView: UIViewController {
     
-    private let ui = MovieListViewUI()
-    private var presenter: MovieListPresenterProtocol!
     
-    private var object : MovieListEntity?
+    @IBOutlet weak var movieListTableView: UITableView!
+    
+     var presenter: MovieListPresenterProtocol!
+     var object : Movie?
     
     override func loadView() {
-        // setting the custom view as the view controller's view
-        ui.delegate = self
-        ui.dataSource = self
-        view = ui
+
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        movieListTableView.dataSource = self
+        movieListTableView.delegate = self
+        
+        
         presenter = MovieListPresenter(view: self)
         
         // Informs the Presenter that the View is ready to receive data.
@@ -35,23 +38,28 @@ class MovieListView: UIViewController {
 
 // MARK: - extending MovieListView to implement it's protocol
 extension MovieListView: MovieListViewProtocol {
-    func set(object: MovieListEntity) {
+    func set(object: Movie) {
         
+    }
+}
+    
+extension MovieListView: UITableViewDelegate, UITableViewDataSource{
+    
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = movieListTableView.dequeueReusableCell(withIdentifier: "nowPlaying", for: indexPath)
+        
+        
+        return cell
     }
     
     
 }
-
-// MARK: - extending MovieListView to implement the custom ui view delegate
-extension MovieListView: MovieListViewUIDelegate {
     
-}
-
-// MARK: - extending MovieListView to implement the custom ui view data source
-extension MovieListView: MovieListViewUIDataSource {
-    func objectFor(ui: MovieListViewUI) -> MovieListEntity {
-        
-    }
     
-    // Pass the pre-defined object to the dataSource.
-}
+
+

@@ -8,40 +8,42 @@
 
 import UIKit
 
-//MARK: View -
-/*
- Should replace "class" with "BaseViewProtocol" if available;
- & that will allow the View to act as a UIViewController;
- & Implement common view functions.
- */
 /// MovieList Module View Protocol
-protocol MovieListViewProtocol: BaseViewProtocol {
-    // Update UI with value returned.
-    /// Set the view Object of Type MovieListEntity
-    func set(object: MovieListEntity)
+protocol MovieListViewProtocol: class {
+    // PRESENTER -> VIEW
+    func showNowPlayingMovies(with movies: [Movie])
+    func showPopularMovies(with movies: [Movie])
 }
 
-//MARK: Interactor -
-/// MovieList Module Interactor Protocol
-protocol MovieListInteractorProtocol {
-    // Fetch Object from Data Layer
-    func fetch(objectFor presenter: MovieListPresenterProtocol)
-}
-
-//MARK: Presenter -
 /// MovieList Module Presenter Protocol
-protocol MovieListPresenterProtocol {
-    /// The presenter will fetch data from the Interactor thru implementing the Interactor fetch function.
-    func fetch(objectFor view: MovieListViewProtocol)
-    /// The Interactor will inform the Presenter a successful fetch.
-    func interactor(_ interactor: MovieListInteractorProtocol, didFetch object: MovieListEntity)
-    /// The Interactor will inform the Presenter a failed fetch.
-    func interactor(_ interactor: MovieListInteractorProtocol, didFailWith error: Error)
+protocol MovieListPresenterProtocol: class {
+    // View -> Presenter
+    var interactor: MovieListInputInteractorProtocol? {get set}
+    var view: MovieListViewProtocol? {get set}
+    var router: MovieListRouterProtocol? {get set}
+    
+    func viewDidLoad()
+    func showMovieSelection(with movie: Movie, from view: UIViewController)
 }
 
-//MARK: Router (aka: Wireframe) -
-/// MovieList Module Router Protocol
-protocol MovieListRouterProtocol {
-    // Show Details of Entity Object coming from ParentView Controller.
-    // func showDetailsFor(object: MovieListEntity, parentViewController viewController: UIViewController)
+/// MovieList Module Presenter Protocol
+protocol MovieListInputInteractorProtocol: class {
+    // Presenter -> Interactor
+    var presenter: MovieListOutputInteractorProtocol? {get set}
+    
+    func getNowPlayingMovieList()
+    func getPopularMovieList()
+}
+
+/// MovieList Module Presenter Protocol
+protocol MovieListOutputInteractorProtocol: class {
+    // Interactor -> Presenter
+    func movieListDidFetch(movieList: [Movie])
+}
+
+/// MovieList Module Presenter Protocol
+protocol MovieListRouterProtocol: class {
+    // Presenter -> Router
+    func pushToMovieDetail(with movie: Movie, from view: UIViewController)
+    static func createMovieListModule(movieListRef: MovieListView)
 }

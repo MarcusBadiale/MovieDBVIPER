@@ -9,32 +9,29 @@
 import UIKit
 
 /// MovieList Module Presenter
-class MovieListPresenter {
+class MovieListPresenter: MovieListPresenterProtocol {
     
-    weak private var _view: MovieListViewProtocol?
-    private var interactor: MovieListInteractorProtocol
-    private var wireframe: MovieListRouterProtocol
     
-    init(view: MovieListViewProtocol) {
-        self._view = view
-        self.interactor = MovieListInteractor()
-        self.wireframe = MovieListRouter()
+    var interactor: MovieListInputInteractorProtocol?
+    var router: MovieListRouterProtocol?
+    var view: MovieListViewProtocol?
+    var presenter: MovieListPresenterProtocol?
+    
+    func viewDidLoad() {
+        
     }
+    
+    func showMovieSelection(with movie: Movie, from view: UIViewController) {
+        
+    }
+    
+
 }
 
 // MARK: - extending MovieListPresenter to implement it's protocol
-extension MovieListPresenter: MovieListPresenterProtocol {
-    func fetch(objectFor view: MovieListViewProtocol) {
+extension MovieListPresenter: MovieListOutputInteractorProtocol {
+    
+    func movieListDidFetch(movieList: [Movie]) {
         
     }
-    
-    func interactor(_ interactor: MovieListInteractorProtocol, didFetch object: MovieListEntity) {
-        
-    }
-    
-    func interactor(_ interactor: MovieListInteractorProtocol, didFailWith error: Error) {
-        
-    }
-    
-    
 }

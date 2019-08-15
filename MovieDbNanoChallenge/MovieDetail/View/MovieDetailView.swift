@@ -11,16 +11,12 @@ import UIKit
 /// MovieDetail Module View
 class MovieDetailView: UIViewController {
     
-    private let ui = MovieDetailViewUI()
     private var presenter: MovieDetailPresenterProtocol!
     
     private var object : MovieDetailEntity?
     
     override func loadView() {
         // setting the custom view as the view controller's view
-        ui.delegate = self
-        ui.dataSource = self
-        view = ui
     }
     
     override func viewDidLoad() {
@@ -42,16 +38,4 @@ extension MovieDetailView: MovieDetailViewProtocol {
     
 }
 
-// MARK: - extending MovieDetailView to implement the custom ui view delegate
-extension MovieDetailView: MovieDetailViewUIDelegate {
-    
-}
 
-// MARK: - extending MovieDetailView to implement the custom ui view data source
-extension MovieDetailView: MovieDetailViewUIDataSource {
-    func objectFor(ui: MovieDetailViewUI) -> MovieDetailEntity {
-        //
-    }
-    
-    // Pass the pre-defined object to the dataSource.
-}

@@ -11,16 +11,12 @@ import UIKit
 /// MovieSearch Module View
 class MovieSearchView: UIViewController {
     
-    private let ui = MovieSearchViewUI()
     private var presenter: MovieSearchPresenterProtocol!
     
     private var object : MovieSearchEntity?
     
     override func loadView() {
-        // setting the custom view as the view controller's view
-        ui.delegate = self
-        ui.dataSource = self
-        view = ui
+
     }
     
     override func viewDidLoad() {
@@ -40,18 +36,4 @@ extension MovieSearchView: MovieSearchViewProtocol {
     }
     
     
-}
-
-// MARK: - extending MovieSearchView to implement the custom ui view delegate
-extension MovieSearchView: MovieSearchViewUIDelegate {
-    
-}
-
-// MARK: - extending MovieSearchView to implement the custom ui view data source
-extension MovieSearchView: MovieSearchViewUIDataSource {
-    func objectFor(ui: MovieSearchViewUI) -> MovieSearchEntity {
-        
-    }
-    
-    // Pass the pre-defined object to the dataSource.
 }
