@@ -36,7 +36,7 @@ class MovieListView: UIViewController {
 // MARK: - extending MovieListView to implement it's protocol
 extension MovieListView: MovieListViewProtocol {
     func set(object: MovieListEntity) {
-        <#code#>
+        
     }
     
     
@@ -50,7 +50,7 @@ extension MovieListView: MovieListViewUIDelegate {
 // MARK: - extending MovieListView to implement the custom ui view data source
 extension MovieListView: MovieListViewUIDataSource {
     func objectFor(ui: MovieListViewUI) -> MovieListEntity {
-        <#code#>
+        
     }
     
     // Pass the pre-defined object to the dataSource.

@@ -10,5 +10,9 @@ import UIKit
 
 /// MovieList Module Interactor
 class MovieListInteractor: MovieListInteractorProtocol {
+    func fetch(objectFor presenter: MovieListPresenterProtocol) {
+        
+    }
+    
 
 }

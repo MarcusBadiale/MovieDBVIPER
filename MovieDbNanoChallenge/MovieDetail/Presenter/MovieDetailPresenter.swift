@@ -24,5 +24,17 @@ class MovieDetailPresenter {
 
 // MARK: - extending MovieDetailPresenter to implement it's protocol
 extension MovieDetailPresenter: MovieDetailPresenterProtocol {
+    func fetch(objectFor view: MovieDetailViewProtocol) {
+        
+    }
+    
+    func interactor(_ interactor: MovieDetailInteractorProtocol, didFetch object: MovieDetailEntity) {
+        
+    }
+    
+    func interactor(_ interactor: MovieDetailInteractorProtocol, didFailWith error: Error) {
+        
+    }
+    
     
 }

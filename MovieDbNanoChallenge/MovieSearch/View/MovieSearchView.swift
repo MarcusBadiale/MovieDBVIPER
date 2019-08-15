@@ -35,6 +35,10 @@ class MovieSearchView: UIViewController {
 
 // MARK: - extending MovieSearchView to implement it's protocol
 extension MovieSearchView: MovieSearchViewProtocol {
+    func set(object: MovieSearchEntity) {
+        
+    }
+    
     
 }
 
@@ -45,5 +49,9 @@ extension MovieSearchView: MovieSearchViewUIDelegate {
 
 // MARK: - extending MovieSearchView to implement the custom ui view data source
 extension MovieSearchView: MovieSearchViewUIDataSource {
+    func objectFor(ui: MovieSearchViewUI) -> MovieSearchEntity {
+        
+    }
+    
     // Pass the pre-defined object to the dataSource.
 }

@@ -24,5 +24,17 @@ class MovieSearchPresenter {
 
 // MARK: - extending MovieSearchPresenter to implement it's protocol
 extension MovieSearchPresenter: MovieSearchPresenterProtocol {
+    func fetch(objectFor view: MovieSearchViewProtocol) {
+        
+    }
+    
+    func interactor(_ interactor: MovieSearchInteractorProtocol, didFetch object: MovieSearchEntity) {
+        
+    }
+    
+    func interactor(_ interactor: MovieSearchInteractorProtocol, didFailWith error: Error) {
+        
+    }
+    
     
 }

@@ -7,8 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AB17D7EB2305E6D1001A54D5 /* UiView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB17D7EA2305E6D1001A54D5 /* UiView.swift */; };
 		AB5CD8DF23049AD00076E151 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB5CD8DE23049AD00076E151 /* AppDelegate.swift */; };
-		AB5CD8E123049AD00076E151 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB5CD8E023049AD00076E151 /* ViewController.swift */; };
 		AB5CD8E423049AD00076E151 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AB5CD8E223049AD00076E151 /* Main.storyboard */; };
 		AB5CD8E623049AD10076E151 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AB5CD8E523049AD10076E151 /* Assets.xcassets */; };
 		AB5CD8E923049AD10076E151 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AB5CD8E723049AD10076E151 /* LaunchScreen.storyboard */; };
@@ -37,9 +37,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		AB17D7EA2305E6D1001A54D5 /* UiView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UiView.swift; sourceTree = "<group>"; };
 		AB5CD8DB23049AD00076E151 /* MovieDbNanoChallenge.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MovieDbNanoChallenge.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AB5CD8DE23049AD00076E151 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		AB5CD8E023049AD00076E151 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		AB5CD8E323049AD00076E151 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		AB5CD8E523049AD10076E151 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		AB5CD8E823049AD10076E151 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -116,7 +116,6 @@
 				AB5CD8F023049B2C0076E151 /* ApplicationBase */,
 				AB787C8023049E6300605A08 /* MovieList */,
 				AB47E87723049D73001B45EE /* MovieDetail */,
-				AB5CD8E023049AD00076E151 /* ViewController.swift */,
 				AB5CD8E223049AD00076E151 /* Main.storyboard */,
 				AB5CD8E723049AD10076E151 /* LaunchScreen.storyboard */,
 			);
@@ -168,6 +167,7 @@
 			children = (
 				AB787C8523049E6300605A08 /* MovieListViewUI.swift */,
 				AB787C8723049E6300605A08 /* MovieListView.swift */,
+				AB17D7EA2305E6D1001A54D5 /* UiView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -386,9 +386,9 @@
 				AB787CB023049F7D00605A08 /* MovieSearchInteractor.swift in Sources */,
 				AB787C9223049E6300605A08 /* MovieListInteractor.swift in Sources */,
 				AB787C9523049E6300605A08 /* MovieListRouter.swift in Sources */,
+				AB17D7EB2305E6D1001A54D5 /* UiView.swift in Sources */,
 				AB787CA123049F5D00605A08 /* MovieDetailInteractor.swift in Sources */,
 				AB787C9D23049F5D00605A08 /* MovieDetailViewUI.swift in Sources */,
-				AB5CD8E123049AD00076E151 /* ViewController.swift in Sources */,
 				AB787CA023049F5D00605A08 /* MovieDetailContracts.swift in Sources */,
 				AB787CAC23049F7D00605A08 /* MovieSearchViewUI.swift in Sources */,
 				AB787CB223049F7D00605A08 /* MovieSearchEntity.swift in Sources */,

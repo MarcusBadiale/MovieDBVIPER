@@ -35,6 +35,10 @@ class MovieDetailView: UIViewController {
 
 // MARK: - extending MovieDetailView to implement it's protocol
 extension MovieDetailView: MovieDetailViewProtocol {
+    func set(object: MovieDetailEntity) {
+        
+    }
+    
     
 }
 
@@ -45,5 +49,9 @@ extension MovieDetailView: MovieDetailViewUIDelegate {
 
 // MARK: - extending MovieDetailView to implement the custom ui view data source
 extension MovieDetailView: MovieDetailViewUIDataSource {
+    func objectFor(ui: MovieDetailViewUI) -> MovieDetailEntity {
+        //
+    }
+    
     // Pass the pre-defined object to the dataSource.
 }
