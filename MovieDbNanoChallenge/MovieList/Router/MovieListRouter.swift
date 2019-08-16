@@ -16,7 +16,7 @@ class MovieListRouter: MovieListRouterProtocol {
         view.navigationController?.pushViewController(movieDetailViewController, animated: true)
     }
     
-    static func createMovieListModule(movieListRef: MovieListView) {
+    class func createMovieListModule(movieListRef: MovieListView) {
         
         let presenter: MovieListPresenterProtocol & MovieListOutputInteractorProtocol = MovieListPresenter()
         

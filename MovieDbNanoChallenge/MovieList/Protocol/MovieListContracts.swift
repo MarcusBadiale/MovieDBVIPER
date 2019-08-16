@@ -23,7 +23,7 @@ protocol MovieListPresenterProtocol: class {
     var router: MovieListRouterProtocol? {get set}
     
     func viewDidLoad()
-    func showMovieSelection(with movie: Movie, from view: UIViewController)
+    func showMovieSelection(with movie: [Movie], from view: UIViewController)
 }
 
 /// MovieList Module Presenter Protocol
@@ -31,14 +31,15 @@ protocol MovieListInputInteractorProtocol: class {
     // Presenter -> Interactor
     var presenter: MovieListOutputInteractorProtocol? {get set}
     
-    func getNowPlayingMovieList()
-    func getPopularMovieList()
+    func getNowPlayingMovieList(presenter: MovieListPresenter)
+    func getPopularMovieList(presenter: MovieListPresenter)
 }
 
 /// MovieList Module Presenter Protocol
 protocol MovieListOutputInteractorProtocol: class {
     // Interactor -> Presenter
-    func movieListDidFetch(movieList: [Movie])
+    func nowPlayingMovieListDidFetch(movieList: [Movie])
+    func popularMovieListDidFetch(movieList: [Movie])
 }
 
 /// MovieList Module Presenter Protocol

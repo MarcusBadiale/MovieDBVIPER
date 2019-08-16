@@ -12,13 +12,22 @@ import UIKit
 class MovieListInteractor:  MovieListInputInteractorProtocol {
     
     var presenter: MovieListOutputInteractorProtocol?
+    var request = Request()
     
-    func getNowPlayingMovieList() {
-        
+    func getNowPlayingMovieList(presenter: MovieListPresenter) {
+        request.fetchNowPlayingMovies() { movies, error in
+            guard let movies = movies, error == nil else { return }
+            presenter.nowPlayingMovieListDidFetch(movieList: movies)
+        }
     }
     
-    func getPopularMovieList() {
-        
+    func getPopularMovieList(presenter: MovieListPresenter) {
+        request.fetchPopularMovies() { movies, error in
+            guard let movies = movies, error == nil else { return }
+            presenter.popularMovieListDidFetch(movieList: movies)
+        }
     }
-
+    
+    
+   
 }

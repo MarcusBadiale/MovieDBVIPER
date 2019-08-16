@@ -18,10 +18,11 @@ class MovieListPresenter: MovieListPresenterProtocol {
     var presenter: MovieListPresenterProtocol?
     
     func viewDidLoad() {
-        
+        interactor?.getNowPlayingMovieList(presenter: self)
+        interactor?.getPopularMovieList(presenter: self)
     }
     
-    func showMovieSelection(with movie: Movie, from view: UIViewController) {
+    func showMovieSelection(with movie: [Movie], from view: UIViewController) {
         
     }
     
@@ -31,7 +32,13 @@ class MovieListPresenter: MovieListPresenterProtocol {
 // MARK: - extending MovieListPresenter to implement it's protocol
 extension MovieListPresenter: MovieListOutputInteractorProtocol {
     
-    func movieListDidFetch(movieList: [Movie]) {
-        
+    func nowPlayingMovieListDidFetch(movieList: [Movie]) {
+        view?.showNowPlayingMovies(with: movieList)
     }
+    
+    func popularMovieListDidFetch(movieList: [Movie]) {
+        view?.showPopularMovies(with: movieList)
+    }
+    
+    
 }

@@ -9,50 +9,109 @@
 import UIKit
 
 /// MovieList Module View
-class MovieListView: UIViewController {
-    
+class MovieListView: UIViewController, MovieListViewProtocol {
     
     @IBOutlet weak var movieListTableView: UITableView!
     
-     var presenter: MovieListPresenterProtocol!
-     var object : Movie?
+    var presenter: MovieListPresenterProtocol?
+    var nowPlayingMovieList: [Movie]?
+    var popularMovieList: [Movie]?
     
-    override func loadView() {
-
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        MovieListRouter.createMovieListModule(movieListRef: self)
+        presenter?.viewDidLoad()
+        
         movieListTableView.dataSource = self
         movieListTableView.delegate = self
-        
-        
-        presenter = MovieListPresenter(view: self)
-        
-        // Informs the Presenter that the View is ready to receive data.
-        presenter.fetch(objectFor: self)
     }
     
-}
-
-// MARK: - extending MovieListView to implement it's protocol
-extension MovieListView: MovieListViewProtocol {
-    func set(object: Movie) {
-        
+    func showNowPlayingMovies(with movies: [Movie]) {
+        nowPlayingMovieList = movies
+        //reload collection
     }
+    
+    func showPopularMovies(with movies: [Movie]) {
+        popularMovieList = movies
+        DispatchQueue.main.async {
+            self.movieListTableView.reloadData()
+        }
+    }
+    
 }
     
 extension MovieListView: UITableViewDelegate, UITableViewDataSource{
     
     
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 2
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        if section == 0{
+            return 1
+        }else{
+            return popularMovieList?.count ?? 0
+        }
+        
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = movieListTableView.dequeueReusableCell(withIdentifier: "nowPlaying", for: indexPath)
         
+        if indexPath.section == 0{
+            let cell = movieListTableView.dequeueReusableCell(withIdentifier: "nowPlaying", for: indexPath) as! MovieListNowPlayingTableViewCell
+            
+            cell.nowPlayingCollectionView.dataSource = self
+            
+            return cell
+        }else{
+            let cell = movieListTableView.dequeueReusableCell(withIdentifier: "popularMovies", for: indexPath) as! PopularMoviesTableViewCell
+            
+            let movie = popularMovieList![indexPath.row]
+            
+            cell.movieTitle.text = movie.title
+            cell.movieRating.text = "\(movie.rating!)"
+            cell.movieDescription.text = movie.description
+            
+            DispatchQueue.global(qos: .background).async {
+                if let url = movie.imageURL, let data = try? Data(contentsOf: url){
+                    DispatchQueue.main.async {
+                        let image = UIImage(data: data)
+                        cell.movieImage.image = image
+                    }
+                }
+            }
+            
+            return cell
+        }
+        
+    }
+}
+
+extension MovieListView: UICollectionViewDelegate, UICollectionViewDataSource{
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 5
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "nowPlayingCollectionCell", for: indexPath) as! NowPlayingCollectionViewCell
+        
+        let movie = nowPlayingMovieList![indexPath.row]
+            
+        cell.movieTitle.text = movie.title
+        cell.movieRating.text = "\(movie.rating!)"
+        
+        DispatchQueue.global(qos: .background).async {
+            if let url = movie.imageURL, let data = try? Data(contentsOf: url){
+                DispatchQueue.main.async {
+                    let image = UIImage(data: data)
+                    cell.movieImage.image = image
+                }
+            }
+        }
         
         return cell
     }

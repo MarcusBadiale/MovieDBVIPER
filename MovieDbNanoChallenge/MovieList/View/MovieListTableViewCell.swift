@@ -11,7 +11,9 @@ import UIKit
 class MovieListNowPlayingTableViewCell: UITableViewCell {
 
     
-    @IBOutlet weak var nowPlayingCollectionViewCell: UICollectionView!
+    @IBOutlet weak var nowPlayingCollectionView: UICollectionView!
     @IBOutlet weak var seeAllButton: UIButton!
     
 }
+
+
