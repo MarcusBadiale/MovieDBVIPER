@@ -9,33 +9,55 @@
 import UIKit
 
 /// MovieDetail Module View
-class MovieDetailView: UIViewController {
+class MovieDetailView: UIViewController, MovieDetailViewProtocol {
+
     
-    private var presenter: MovieDetailPresenterProtocol!
     
-    private var object : MovieDetailEntity?
+    @IBOutlet weak var movieImage: UIImageView!
+    @IBOutlet weak var movieTitle: UILabel!
+    @IBOutlet weak var movieGenres: UILabel!
+    @IBOutlet weak var movieRating: UILabel!
+    @IBOutlet weak var movieDescription: UITextView!
     
-    override func loadView() {
-        // setting the custom view as the view controller's view
-    }
+    var presenter: MovieDetailPresenterProtocol?
+    var movie: Movie?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        presenter = MovieDetailPresenter(view: self)
         
-        // Informs the Presenter that the View is ready to receive data.
-        presenter.fetch(objectFor: self)
+        presenter?.viewDidLoad()
+        setupMovie(movie: self.movie!)
+        sendId(movie: movie!)
+        
     }
     
-}
+    func setupMovie(movie: Movie) {
+        
+        movieTitle.text = movie.title
+        movieRating.text = "\(movie.rating ?? 10.0)"
+        movieDescription.text = movie.overview
+        
+        DispatchQueue.global(qos: .background).async {
+            if let url = movie.imageURL, let data = try? Data(contentsOf: url){
+                DispatchQueue.main.async {
+                    let image = UIImage(data: data)
+                    self.movieImage.image = image
+                }
+            }
+        }
 
-// MARK: - extending MovieDetailView to implement it's protocol
-extension MovieDetailView: MovieDetailViewProtocol {
-    func set(object: MovieDetailEntity) {
-        
     }
     
-    
+    //EDIT THIS FUNCTION
+    func sendId(movie: Movie) {
+        let presenter = MovieDetailPresenter()
+        
+        presenter.movieId = movie.id
+    }
+
+    func showGenres(genres: String) {
+        movieGenres.text = genres
+    }
 }
 
 

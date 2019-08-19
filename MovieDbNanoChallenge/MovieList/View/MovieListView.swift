@@ -26,6 +26,7 @@ class MovieListView: UIViewController, MovieListViewProtocol {
         
         movieListTableView.dataSource = self
         movieListTableView.delegate = self
+        
     }
     
     func showNowPlayingMovies(with movies: [Movie]) {
@@ -49,6 +50,10 @@ extension MovieListView: UITableViewDelegate, UITableViewDataSource{
         return 2
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        presenter?.router?.pushToMovieDetail(with: popularMovieList![indexPath.row], from: self)
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0{
             return 1
@@ -64,6 +69,8 @@ extension MovieListView: UITableViewDelegate, UITableViewDataSource{
             let cell = movieListTableView.dequeueReusableCell(withIdentifier: "nowPlaying", for: indexPath) as! MovieListNowPlayingTableViewCell
             
             cell.nowPlayingCollectionView.dataSource = self
+            cell.nowPlayingCollectionView.delegate = self
+            cell.selectionStyle = .none
             
             return cell
         }else{
@@ -73,7 +80,7 @@ extension MovieListView: UITableViewDelegate, UITableViewDataSource{
             
             cell.movieTitle.text = movie.title
             cell.movieRating.text = "\(movie.rating!)"
-            cell.movieDescription.text = movie.description
+            cell.movieDescription.text = movie.overview
             
             DispatchQueue.global(qos: .background).async {
                 if let url = movie.imageURL, let data = try? Data(contentsOf: url){
@@ -83,6 +90,7 @@ extension MovieListView: UITableViewDelegate, UITableViewDataSource{
                     }
                 }
             }
+            cell.selectionStyle = .none
             
             return cell
         }
@@ -96,16 +104,20 @@ extension MovieListView: UICollectionViewDelegate, UICollectionViewDataSource{
         return 5
     }
     
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        presenter?.router?.pushToMovieDetail(with: nowPlayingMovieList![indexPath.row], from: self)
+    }
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "nowPlayingCollectionCell", for: indexPath) as! NowPlayingCollectionViewCell
         
-        let movie = nowPlayingMovieList![indexPath.row]
+        let movie = nowPlayingMovieList?[indexPath.row]
             
-        cell.movieTitle.text = movie.title
-        cell.movieRating.text = "\(movie.rating!)"
+        cell.movieTitle.text = movie?.title
+        cell.movieRating.text = "\(movie?.rating! ?? 10.0)"
         
         DispatchQueue.global(qos: .background).async {
-            if let url = movie.imageURL, let data = try? Data(contentsOf: url){
+            if let url = movie?.imageURL, let data = try? Data(contentsOf: url){
                 DispatchQueue.main.async {
                     let image = UIImage(data: data)
                     cell.movieImage.image = image
@@ -118,7 +130,4 @@ extension MovieListView: UICollectionViewDelegate, UICollectionViewDataSource{
     
     
 }
-    
-    
-
 

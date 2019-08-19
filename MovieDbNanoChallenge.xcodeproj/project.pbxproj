@@ -30,7 +30,6 @@
 		AB787CA023049F5D00605A08 /* MovieDetailContracts.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB787C9923049F5D00605A08 /* MovieDetailContracts.swift */; };
 		AB787CA123049F5D00605A08 /* MovieDetailInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB787C9A23049F5D00605A08 /* MovieDetailInteractor.swift */; };
 		AB787CA223049F5D00605A08 /* MovieDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB787C9B23049F5D00605A08 /* MovieDetailView.swift */; };
-		AB787CA323049F5D00605A08 /* MovieDetailEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB787C9C23049F5D00605A08 /* MovieDetailEntity.swift */; };
 		AB787CAD23049F7D00605A08 /* MovieSearchPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB787CA623049F7D00605A08 /* MovieSearchPresenter.swift */; };
 		AB787CAE23049F7D00605A08 /* MovieSearchRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB787CA723049F7D00605A08 /* MovieSearchRouter.swift */; };
 		AB787CAF23049F7D00605A08 /* MovieSearchContracts.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB787CA823049F7D00605A08 /* MovieSearchContracts.swift */; };
@@ -65,7 +64,6 @@
 		AB787C9923049F5D00605A08 /* MovieDetailContracts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailContracts.swift; sourceTree = "<group>"; };
 		AB787C9A23049F5D00605A08 /* MovieDetailInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailInteractor.swift; sourceTree = "<group>"; };
 		AB787C9B23049F5D00605A08 /* MovieDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailView.swift; sourceTree = "<group>"; };
-		AB787C9C23049F5D00605A08 /* MovieDetailEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailEntity.swift; sourceTree = "<group>"; };
 		AB787CA623049F7D00605A08 /* MovieSearchPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieSearchPresenter.swift; sourceTree = "<group>"; };
 		AB787CA723049F7D00605A08 /* MovieSearchRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieSearchRouter.swift; sourceTree = "<group>"; };
 		AB787CA823049F7D00605A08 /* MovieSearchContracts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieSearchContracts.swift; sourceTree = "<group>"; };
@@ -126,6 +124,7 @@
 		AB5CD8DD23049AD00076E151 /* MovieDbNanoChallenge */ = {
 			isa = PBXGroup;
 			children = (
+				AB17D7F423071AD0001A54D5 /* Networking */,
 				AB787CA423049F6C00605A08 /* MovieSearch */,
 				AB5CD8F023049B2C0076E151 /* ApplicationBase */,
 				AB787C8023049E6300605A08 /* MovieList */,
@@ -150,7 +149,6 @@
 		AB787C8023049E6300605A08 /* MovieList */ = {
 			isa = PBXGroup;
 			children = (
-				AB17D7F423071AD0001A54D5 /* Networking */,
 				AB787C8623049E6300605A08 /* View */,
 				AB787C8823049E6300605A08 /* Interactor */,
 				AB787C8323049E6300605A08 /* Presenter */,
@@ -255,7 +253,6 @@
 		AB787CB823049FAF00605A08 /* Entity */ = {
 			isa = PBXGroup;
 			children = (
-				AB787C9C23049F5D00605A08 /* MovieDetailEntity.swift */,
 			);
 			path = Entity;
 			sourceTree = "<group>";
@@ -416,7 +413,6 @@
 				AB787CAE23049F7D00605A08 /* MovieSearchRouter.swift in Sources */,
 				AB5CD8DF23049AD00076E151 /* AppDelegate.swift in Sources */,
 				AB787C9F23049F5D00605A08 /* MovieDetailRouter.swift in Sources */,
-				AB787CA323049F5D00605A08 /* MovieDetailEntity.swift in Sources */,
 				AB17D7ED2305ECDD001A54D5 /* MovieListTableViewCell.swift in Sources */,
 				AB17D7F1230717E4001A54D5 /* NowPlayingCollectionViewCell.swift in Sources */,
 				AB787C8F23049E6300605A08 /* MovieListPresenter.swift in Sources */,

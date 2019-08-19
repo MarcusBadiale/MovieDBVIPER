@@ -8,10 +8,22 @@
 
 import UIKit
 
-/// MovieDetail Module Router (aka: Wireframe)
 class MovieDetailRouter: MovieDetailRouterProtocol {
+    func pushToMovieList(with movie: Movie, from view: UIViewController) {
+        
+    }
     
     static func createMovieDetailModule(movieDetailRef: MovieDetailView, movie: Movie) {
         
+        let presenter: MovieDetailPresenterProtocol & MovieDetailOutputInteractorProtocol = MovieDetailPresenter()
+        
+        movieDetailRef.presenter = presenter
+        movieDetailRef.presenter?.router = MovieDetailRouter()
+        movieDetailRef.presenter?.view = movieDetailRef
+        movieDetailRef.presenter?.interactor = MovieDetailInteractor()
+        movieDetailRef.presenter?.interactor?.presenter = presenter
+        movieDetailRef.movie = movie
     }
+    
+    
 }

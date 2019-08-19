@@ -12,6 +12,7 @@ import Foundation
 class Request {
     
     typealias CompletionHandler = ( _ data: [Movie]?, _ error: Error?) -> Void
+    typealias CompletionHandlerGenre = ( _ data: [Genre]?, _ error: Error?) -> Void
     
     func fetchNowPlayingMovies(completionHandler: @escaping CompletionHandler) {
     
@@ -51,6 +52,25 @@ class Request {
             }
             }.resume()
         
+    }
+    
+    func fetchMovieGenres(movieId: Int, completionHandler: @escaping CompletionHandlerGenre) {
+        
+        var genres: [Genre] = []
+        
+        guard let url = URL(string: "https://api.themoviedb.org/3/movie/\(movieId)?api_key=4c86680eeadb3c625a7f347b2ce6e135&language=en-US") else { return }
+        URLSession.shared.dataTask(with: url) { (data, response, error) in
+            guard let data = data else { return }
+            do {
+                let decoder = JSONDecoder()
+                let response = try decoder.decode(Response.self, from: data)
+                genres = response.genres!
+                completionHandler(genres, nil)
+                
+            } catch let error{
+                print("Error", error)
+            }
+            }.resume()
     }
     
 //    func fetchSearchResult() -> [Movie] {

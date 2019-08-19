@@ -1,9 +1,9 @@
 //
-//  MovieDetailEntity.swift
+//  result.swift
 //  MovieDbNanoChallenge
 //
-//  Created Marcus Vinicius Vieira Badiale on 14/08/19.
+//  Created by Marcus Vinicius Vieira Badiale on 19/08/19.
 //  Copyright © 2019 Marcus Vinicius Vieira Badiale. All rights reserved.
 //
 
-import UIKit
+import Foundation

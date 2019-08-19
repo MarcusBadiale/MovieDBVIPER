@@ -12,7 +12,7 @@ import UIKit
 class MovieListRouter: MovieListRouterProtocol {
     func pushToMovieDetail(with movie: Movie, from view: UIViewController) {
         let movieDetailViewController = view.storyboard?.instantiateViewController(withIdentifier: "MovieDetailView") as! MovieDetailView
-//        MovieDetailRouter.createMovieDetailModule(movieDetailRef: movieDetailViewController, movie: Movie)
+        MovieDetailRouter.createMovieDetailModule(movieDetailRef: movieDetailViewController, movie: movie)
         view.navigationController?.pushViewController(movieDetailViewController, animated: true)
     }
     

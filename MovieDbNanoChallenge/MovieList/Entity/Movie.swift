@@ -13,20 +13,20 @@ struct Movie: Codable {
     
     var title: String?
     var rating: Double?
-    var description: String?
+    var overview: String?
     var posterPath: String?
     var id: Int?
-//    var genres: [Genre]
+    var genres: [Genre]?
+    
     var imageURL: URL? {
         guard let posterPath = posterPath else { return nil }
         return URL(string: "https://image.tmdb.org/t/p/w500/\(posterPath)")
     }
     
     private enum CodingKeys: String, CodingKey {
-        case title, id
+        case title, id, overview
         case rating = "vote_average"
         case posterPath = "poster_path"
-        case description = "overview"
     }
     
 }

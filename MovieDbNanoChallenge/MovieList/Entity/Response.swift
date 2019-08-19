@@ -11,8 +11,10 @@ import Foundation
 struct Response: Codable{
     
     var response: [Movie]?
+    var genres: [Genre]?
     
     private enum CodingKeys: String, CodingKey{
         case response = "results"
+        case genres
     }
 }

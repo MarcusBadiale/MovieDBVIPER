@@ -9,10 +9,17 @@
 import UIKit
 
 /// MovieDetail Module Interactor
-class MovieDetailInteractor: MovieDetailInteractorProtocol {
-    func fetch(objectFor presenter: MovieDetailPresenterProtocol) {
-        
+class MovieDetailInteractor: MovieDetailInputInteractorProtocol {
+    
+    var presenter: MovieDetailOutputInteractorProtocol?
+    var request = Request()
+    
+    func getMovieDetails(presenter: MovieDetailPresenter) {
+        request.fetchMovieGenres(movieId: presenter.movieId ?? 25) { genres, error in
+            guard let genres = genres, error == nil else { return }
+            presenter.movieGenresDidFetch(genres: genres)
+            
+        }
     }
     
-
 }

@@ -1,5 +1,5 @@
 //
-//  MovieDetailContracts.swift
+//  MovieListContracts.swift
 //  MovieDbNanoChallenge
 //
 //  Created Marcus Vinicius Vieira Badiale on 14/08/19.
@@ -8,40 +8,39 @@
 
 import UIKit
 
-//MARK: View -
-/*
- Should replace "class" with "BaseViewProtocol" if available;
- & that will allow the View to act as a UIViewController;
- & Implement common view functions.
- */
 /// MovieDetail Module View Protocol
 protocol MovieDetailViewProtocol: class {
-    // Update UI with value returned.
-    /// Set the view Object of Type MovieDetailEntity
-    func set(object: MovieDetailEntity)
+    // PRESENTER -> VIEW
+    func showGenres(genres: String)
 }
 
-//MARK: Interactor -
-/// MovieDetail Module Interactor Protocol
-protocol MovieDetailInteractorProtocol {
-    // Fetch Object from Data Layer
-    func fetch(objectFor presenter: MovieDetailPresenterProtocol)
+/// MovieList Module Presenter Protocol
+protocol MovieDetailPresenterProtocol: class {
+    // View -> Presenter
+    var interactor: MovieDetailInputInteractorProtocol? {get set}
+    var view: MovieDetailViewProtocol? {get set}
+    var router: MovieDetailRouterProtocol? {get set}
+    
+    func viewDidLoad()
 }
 
-//MARK: Presenter -
-/// MovieDetail Module Presenter Protocol
-protocol MovieDetailPresenterProtocol {
-    /// The presenter will fetch data from the Interactor thru implementing the Interactor fetch function.
-    func fetch(objectFor view: MovieDetailViewProtocol)
-    /// The Interactor will inform the Presenter a successful fetch.
-    func interactor(_ interactor: MovieDetailInteractorProtocol, didFetch object: MovieDetailEntity)
-    /// The Interactor will inform the Presenter a failed fetch.
-    func interactor(_ interactor: MovieDetailInteractorProtocol, didFailWith error: Error)
+/// MovieList Module Presenter Protocol
+protocol MovieDetailInputInteractorProtocol: class {
+    // Presenter -> Interactor
+    var presenter: MovieDetailOutputInteractorProtocol? {get set}
+    
+    func getMovieDetails(presenter: MovieDetailPresenter)
 }
 
-//MARK: Router (aka: Wireframe) -
-/// MovieDetail Module Router Protocol
-protocol MovieDetailRouterProtocol {
-    // Show Details of Entity Object coming from ParentView Controller.
-    // func showDetailsFor(object: MovieDetailEntity, parentViewController viewController: UIViewController)
+/// MovieList Module Presenter Protocol
+protocol MovieDetailOutputInteractorProtocol: class {
+    // Interactor -> Presenter
+    func movieGenresDidFetch(genres: [Genre])
+}
+
+/// MovieList Module Presenter Protocol
+protocol MovieDetailRouterProtocol: class {
+    // Presenter -> Router
+    func pushToMovieList(with movie: Movie, from view: UIViewController)
+    static func createMovieDetailModule(movieDetailRef: MovieDetailView, movie: Movie)
 }
