@@ -15,7 +15,7 @@ class MovieDetailInteractor: MovieDetailInputInteractorProtocol {
     var request = Request()
     
     func getMovieDetails(presenter: MovieDetailPresenter) {
-        request.fetchMovieGenres(movieId: presenter.movieId ?? 25) { genres, error in
+        request.fetchMovieGenres(movieId: presenter.movie?.id ?? 25) { genres, error in
             guard let genres = genres, error == nil else { return }
             presenter.movieGenresDidFetch(genres: genres)
             

@@ -16,7 +16,7 @@ class MovieDetailPresenter: MovieDetailPresenterProtocol {
     var router: MovieDetailRouterProtocol?
     var presenter: MovieDetailPresenterProtocol?
     
-    var movieId: Int?
+    var movie: Movie?
     
     func viewDidLoad() {
         interactor?.getMovieDetails(presenter: self)

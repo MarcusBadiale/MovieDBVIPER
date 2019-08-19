@@ -42,5 +42,5 @@ protocol MovieDetailOutputInteractorProtocol: class {
 protocol MovieDetailRouterProtocol: class {
     // Presenter -> Router
     func pushToMovieList(with movie: Movie, from view: UIViewController)
-    static func createMovieDetailModule(movieDetailRef: MovieDetailView, movie: Movie)
+    static func createMovieDetailModule(movieDetailRef: MovieDetailPresenter?, controller: MovieDetailView, movie: Movie)
 }

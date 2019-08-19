@@ -27,7 +27,6 @@ class MovieDetailView: UIViewController, MovieDetailViewProtocol {
         
         presenter?.viewDidLoad()
         setupMovie(movie: self.movie!)
-        sendId(movie: movie!)
         
     }
     
@@ -47,16 +46,11 @@ class MovieDetailView: UIViewController, MovieDetailViewProtocol {
         }
 
     }
-    
-    //EDIT THIS FUNCTION
-    func sendId(movie: Movie) {
-        let presenter = MovieDetailPresenter()
-        
-        presenter.movieId = movie.id
-    }
 
     func showGenres(genres: String) {
-        movieGenres.text = genres
+        DispatchQueue.main.async {
+//            self.movieGenres.text = genres
+        }
     }
 }
 
