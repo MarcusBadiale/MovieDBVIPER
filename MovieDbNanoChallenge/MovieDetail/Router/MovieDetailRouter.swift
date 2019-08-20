@@ -15,9 +15,9 @@ class MovieDetailRouter: MovieDetailRouterProtocol {
     
     static func createMovieDetailModule(movieDetailRef: MovieDetailPresenter?, controller: MovieDetailView, movie: Movie) {
         
-        movieDetailRef?.presenter = movieDetailRef
+//        movieDetailRef?.presenter = movieDetailRef
         movieDetailRef?.router = MovieDetailRouter()
-        movieDetailRef?.view = MovieDetailView()
+        movieDetailRef?.view = controller
         movieDetailRef?.interactor = MovieDetailInteractor()
         movieDetailRef?.interactor?.presenter = movieDetailRef
         movieDetailRef?.movie = movie

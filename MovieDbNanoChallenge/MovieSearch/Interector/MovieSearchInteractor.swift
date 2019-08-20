@@ -9,10 +9,8 @@
 import UIKit
 
 /// MovieSearch Module Interactor
-class MovieSearchInteractor: MovieSearchInteractorProtocol {
-    func fetch(objectFor presenter: MovieSearchPresenterProtocol) {
-        
-    }
+class MovieSearchInteractor: MovieSearchInputInteractorProtocol {
+    var presenter: MovieSearchOutputInteractorProtocol?
     
 
 }

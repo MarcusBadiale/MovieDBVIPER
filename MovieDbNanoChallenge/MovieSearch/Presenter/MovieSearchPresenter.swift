@@ -9,32 +9,21 @@
 import UIKit
 
 /// MovieSearch Module Presenter
-class MovieSearchPresenter {
+class MovieSearchPresenter: MovieSearchPresenterProtocol {
     
-    weak private var _view: MovieSearchViewProtocol?
-    private var interactor: MovieSearchInteractorProtocol
-    private var wireframe: MovieSearchRouterProtocol
+    var interactor: MovieSearchInputInteractorProtocol?
+    var view: MovieSearchViewProtocol?
+    var router: MovieSearchRouterProtocol?
+    var presenter: MovieSearchPresenterProtocol?
     
-    init(view: MovieSearchViewProtocol) {
-        self._view = view
-        self.interactor = MovieSearchInteractor()
-        self.wireframe = MovieSearchRouter()
+    var movies: [Movie]?
+    
+    func viewDidLoad() {
+        view?.showMovies(movies: movies!)
     }
+    
 }
 
-// MARK: - extending MovieSearchPresenter to implement it's protocol
-extension MovieSearchPresenter: MovieSearchPresenterProtocol {
-    func fetch(objectFor view: MovieSearchViewProtocol) {
-        
-    }
-    
-    func interactor(_ interactor: MovieSearchInteractorProtocol, didFetch object: MovieSearchEntity) {
-        
-    }
-    
-    func interactor(_ interactor: MovieSearchInteractorProtocol, didFailWith error: Error) {
-        
-    }
-    
+extension MovieSearchPresenter: MovieSearchOutputInteractorProtocol {
     
 }

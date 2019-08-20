@@ -16,21 +16,32 @@ class MovieListPresenter: MovieListPresenterProtocol {
     var router: MovieListRouterProtocol?
     var view: MovieListViewProtocol?
     var presenter: MovieListPresenterProtocol?
+    var name: String = ""
     
     func viewDidLoad() {
         interactor?.getNowPlayingMovieList(presenter: self)
         interactor?.getPopularMovieList(presenter: self)
+//        interactor?.getSearchMovieList(presenter: self)
     }
     
     func showMovieSelection(with movie: [Movie], from view: UIViewController) {
         
     }
     
+    func sendSearchText(with name: String) {
+        self.name = name
+        interactor?.getSearchMovieList(presenter: self)
+    }
 
 }
 
 // MARK: - extending MovieListPresenter to implement it's protocol
 extension MovieListPresenter: MovieListOutputInteractorProtocol {
+    
+    func searchMoviesDidFetch(movieList: [Movie]) {
+        view?.showSearchMovies(with: movieList)
+    }
+    
     
     func nowPlayingMovieListDidFetch(movieList: [Movie]) {
         view?.showNowPlayingMovies(with: movieList)

@@ -9,30 +9,60 @@
 import UIKit
 
 /// MovieSearch Module View
-class MovieSearchView: UIViewController {
+class MovieSearchView: UIViewController, MovieSearchViewProtocol {
     
-    private var presenter: MovieSearchPresenterProtocol!
+    @IBOutlet weak var fullNowPlayingCollectionView: UICollectionView!
+    @IBOutlet weak var numberOfResults: UILabel!
     
-    private var object : MovieSearchEntity?
+    var presenter: MovieSearchPresenterProtocol?
+    var movies: [Movie] = []
     
-    override func loadView() {
-
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        presenter?.viewDidLoad()
+        fullNowPlayingCollectionView.delegate = self
+        fullNowPlayingCollectionView.dataSource = self
+        
+        numberOfResults.text = "Showing \(movies.count) results"
+        
+//        navigationItem.backBarButtonItem?.title
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        presenter = MovieSearchPresenter(view: self)
-        
-        // Informs the Presenter that the View is ready to receive data.
-        presenter.fetch(objectFor: self)
+    func showMovies(movies: [Movie]) {
+        self.movies = movies
     }
     
 }
 
-// MARK: - extending MovieSearchView to implement it's protocol
-extension MovieSearchView: MovieSearchViewProtocol {
-    func set(object: MovieSearchEntity) {
+extension MovieSearchView: UICollectionViewDelegate, UICollectionViewDataSource{
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return movies.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        presenter?.router?.pushToMovieDetail(with: movies[indexPath.row], from: self)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "nowPlayingCollectionCell", for: indexPath) as! NowPlayingCollectionViewCell
         
+        let movie = movies[indexPath.row]
+        
+        cell.movieTitle.text = movie.title
+        cell.movieRating.text = "\(movie.rating!)"
+        
+        DispatchQueue.global(qos: .background).async {
+            if let url = movie.imageURL, let data = try? Data(contentsOf: url){
+                DispatchQueue.main.async {
+                    let image = UIImage(data: data)
+                    cell.movieImage.image = image
+                }
+            }
+        }
+        
+        return cell
     }
     
     

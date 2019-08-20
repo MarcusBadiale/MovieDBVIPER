@@ -13,6 +13,7 @@ protocol MovieListViewProtocol: class {
     // PRESENTER -> VIEW
     func showNowPlayingMovies(with movies: [Movie])
     func showPopularMovies(with movies: [Movie])
+    func showSearchMovies(with movies: [Movie])
 }
 
 /// MovieList Module Presenter Protocol
@@ -24,6 +25,7 @@ protocol MovieListPresenterProtocol: class {
     
     func viewDidLoad()
     func showMovieSelection(with movie: [Movie], from view: UIViewController)
+    func sendSearchText(with name: String)
 }
 
 /// MovieList Module Presenter Protocol
@@ -33,6 +35,7 @@ protocol MovieListInputInteractorProtocol: class {
     
     func getNowPlayingMovieList(presenter: MovieListPresenter)
     func getPopularMovieList(presenter: MovieListPresenter)
+    func getSearchMovieList(presenter: MovieListPresenter)
 }
 
 /// MovieList Module Presenter Protocol
@@ -40,11 +43,14 @@ protocol MovieListOutputInteractorProtocol: class {
     // Interactor -> Presenter
     func nowPlayingMovieListDidFetch(movieList: [Movie])
     func popularMovieListDidFetch(movieList: [Movie])
+    func searchMoviesDidFetch(movieList: [Movie])
 }
 
 /// MovieList Module Presenter Protocol
 protocol MovieListRouterProtocol: class {
     // Presenter -> Router
     func pushToMovieDetail(with movie: Movie, from view: UIViewController)
+    func pushToNowPlaying(with movies: [Movie], from view: UIViewController)
+    
     static func createMovieListModule(movieListRef: MovieListView)
 }

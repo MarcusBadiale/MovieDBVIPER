@@ -13,4 +13,8 @@ class NowPlayingCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var movieImage: UIImageView!
     @IBOutlet weak var movieTitle: UILabel!
     @IBOutlet weak var movieRating: UILabel!
+    
+    override func prepareForReuse() {
+        movieImage.image = nil
+    }
 }

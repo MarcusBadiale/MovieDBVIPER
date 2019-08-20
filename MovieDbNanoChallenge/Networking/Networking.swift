@@ -73,6 +73,27 @@ class Request {
             }.resume()
     }
     
+    func fetchSearchMovies(name: String, completionHandler: @escaping CompletionHandler) {
+        
+        var movies: [Movie] = []
+        let name = name.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) ?? ""
+        
+        guard let url = URL(string: "https://api.themoviedb.org/3/search/movie?api_key=4c86680eeadb3c625a7f347b2ce6e135&language=en-US&query=\(name)&page=1&include_adult=false") else { return }
+        URLSession.shared.dataTask(with: url) { (data, response, error) in
+            guard let data = data else { return }
+            do {
+                let decoder = JSONDecoder()
+                let response = try decoder.decode(Response.self, from: data)
+                movies = response.response!
+                completionHandler(movies, nil)
+                
+            } catch let error{
+                print("Error", error)
+            }
+            }.resume()
+        
+    }
+    
 //    func fetchSearchResult() -> [Movie] {
 //        
 //    }

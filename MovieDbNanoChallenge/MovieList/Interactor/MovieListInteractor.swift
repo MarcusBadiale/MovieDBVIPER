@@ -10,7 +10,7 @@ import UIKit
 
 /// MovieList Module Interactor
 class MovieListInteractor:  MovieListInputInteractorProtocol {
-    
+
     var presenter: MovieListOutputInteractorProtocol?
     var request = Request()
     
@@ -28,6 +28,11 @@ class MovieListInteractor:  MovieListInputInteractorProtocol {
         }
     }
     
-    
+    func getSearchMovieList(presenter: MovieListPresenter) {
+        request.fetchSearchMovies(name: presenter.name) { movies, error in
+            guard let movies = movies, error == nil else { return }
+            presenter.searchMoviesDidFetch(movieList: movies)
+        }
+    }
    
 }

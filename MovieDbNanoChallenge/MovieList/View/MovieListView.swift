@@ -10,39 +10,119 @@ import UIKit
 
 /// MovieList Module View
 class MovieListView: UIViewController, MovieListViewProtocol {
-    
+
     @IBOutlet weak var movieListTableView: UITableView!
+    @IBOutlet weak var loadingTableViewIndicator: UIActivityIndicatorView!
+    @IBOutlet weak var searchMovieCollection: UICollectionView!
     
     var presenter: MovieListPresenterProtocol?
     var nowPlayingMovieList: [Movie]?
     var popularMovieList: [Movie]?
+    var filteredSearchMovies: [Movie]?
+    var isSearching = false
     
+    let searchController = UISearchController(searchResultsController: nil)
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // Setup the Search Controller
+        searchController.searchResultsUpdater = self
+        searchController.obscuresBackgroundDuringPresentation = false
+        searchController.searchBar.delegate = self
+        navigationItem.searchController = searchController
+        definesPresentationContext = true
+        
         MovieListRouter.createMovieListModule(movieListRef: self)
         presenter?.viewDidLoad()
         
+        //Tableview config
         movieListTableView.dataSource = self
         movieListTableView.delegate = self
-        
+        //
+        movieListTableView.isHidden = true
+        searchMovieCollection.isHidden = true
+        //SearchCollection config
+        searchMovieCollection.delegate = self
+        searchMovieCollection.dataSource = self
     }
+    
+    //MARK: - Auxiliar functions
     
     func showNowPlayingMovies(with movies: [Movie]) {
         nowPlayingMovieList = movies
         //reload collection
+        DispatchQueue.main.async {
+            self.movieListTableView.reloadSections(IndexSet(arrayLiteral: 0), with: UITableView.RowAnimation.top)
+        }
     }
     
     func showPopularMovies(with movies: [Movie]) {
         popularMovieList = movies
         DispatchQueue.main.async {
             self.movieListTableView.reloadData()
+            self.loadingTableViewIndicator.isHidden = true
+            self.movieListTableView.isHidden = false
         }
     }
     
-}
+    func showSearchMovies(with movies: [Movie]) {
+        filteredSearchMovies?.removeAll()
+        filteredSearchMovies = movies
+        DispatchQueue.main.async {
+            self.searchMovieCollection.reloadData()
+            self.loadingTableViewIndicator.isHidden = true
+        }
+    }
     
+    func searchBarIsEmpty() -> Bool {
+        // Returns true if the text is empty or nil
+        return searchController.searchBar.text?.isEmpty ?? true
+    }
+    
+    func filterContentForSearchText(searchText: String, scope: String = "All") {
+//        searchMovies =
+    }
+    
+    @IBAction func seeAllButtonAction(_ sender: UIButton) {
+        presenter?.router?.pushToNowPlaying(with: nowPlayingMovieList!, from: self)
+    }
+}
+
+
+//MARK: - Extensions
+
+//SearchBar extension
+extension MovieListView: UISearchResultsUpdating{
+    func updateSearchResults(for searchController: UISearchController) {
+        if searchController.searchBar.text?.count ?? 0 >= 3{
+            presenter?.sendSearchText(with: searchController.searchBar.text ?? "")
+            loadingTableViewIndicator.isHidden = false
+        }
+    }
+}
+
+extension MovieListView: UISearchBarDelegate{
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        movieListTableView.isHidden = true
+        searchMovieCollection.isHidden = false
+        searchMovieCollection.reloadData()
+        
+        isSearching = true
+        
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        movieListTableView.isHidden = false
+        searchMovieCollection.isHidden = true
+        loadingTableViewIndicator.isHidden = true
+        
+        isSearching = false
+    }
+}
+
+
+//Viper module extension
 extension MovieListView: UITableViewDelegate, UITableViewDataSource{
     
     
@@ -65,7 +145,7 @@ extension MovieListView: UITableViewDelegate, UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        if indexPath.section == 0{
+        if indexPath.section == 0 {
             let cell = movieListTableView.dequeueReusableCell(withIdentifier: "nowPlaying", for: indexPath) as! MovieListNowPlayingTableViewCell
             
             cell.nowPlayingCollectionView.dataSource = self
@@ -100,8 +180,14 @@ extension MovieListView: UITableViewDelegate, UITableViewDataSource{
 
 extension MovieListView: UICollectionViewDelegate, UICollectionViewDataSource{
     
+    
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 5
+        if isSearching{
+            return filteredSearchMovies?.count ?? 0
+        }else{
+            return 5
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -109,9 +195,10 @@ extension MovieListView: UICollectionViewDelegate, UICollectionViewDataSource{
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "nowPlayingCollectionCell", for: indexPath) as! NowPlayingCollectionViewCell
         
-        let movie = nowPlayingMovieList?[indexPath.row]
+        let movie = isSearching ? filteredSearchMovies?[indexPath.row] : nowPlayingMovieList?[indexPath.row]
             
         cell.movieTitle.text = movie?.title
         cell.movieRating.text = "\(movie?.rating! ?? 10.0)"
@@ -124,10 +211,7 @@ extension MovieListView: UICollectionViewDelegate, UICollectionViewDataSource{
                 }
             }
         }
-        
         return cell
     }
-    
-    
 }
 
