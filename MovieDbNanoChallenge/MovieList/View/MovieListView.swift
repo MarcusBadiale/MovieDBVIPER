@@ -191,7 +191,14 @@ extension MovieListView: UICollectionViewDelegate, UICollectionViewDataSource{
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        presenter?.router?.pushToMovieDetail(with: nowPlayingMovieList![indexPath.row], from: self)
+        
+        if isSearching{
+            presenter?.router?.pushToMovieDetail(with: filteredSearchMovies![indexPath.row], from: self)
+        }else{
+            presenter?.router?.pushToMovieDetail(with: nowPlayingMovieList![indexPath.row], from: self)
+        }
+        
+        
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
